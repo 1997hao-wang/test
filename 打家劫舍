@@ -1,0 +1,32 @@
+public int rob(int[] arr) {
+	int pre = 0;
+	int cur = 0;
+	for(int i=0; i<arr.length; i++) {
+		int temp = cur;
+		cur = Math.max(cur, pre+arr[i]);
+		pre = temp;
+	}
+	return cur;
+}
+
+//环形
+public int robCycle(int[] arr) {
+	int len = arr.length;
+	if(len == 1)	return arr[0];
+	if(len == 2)	return arr[0]>arr[1] ? arr[0] : arr[1];
+	return Math.max(rob(Arrays.copyOfRange(arr, 0, len-1)), rob(Arrays.copyOfRange(arr, 1, len)));
+}
+
+//树形
+public int robTree(TreeNode root) {
+	int[] res = dfs(root);
+	return Math.max(res[0], res[1]);
+}
+public int[] dfs(TreeNode root) {
+	if(root == null)	return new int[]{0, 0};
+	int[] left = dfs(root.left);
+	int[] right = dfs(root.right);
+	int isSelected = root.val + left[1] + right[1];
+	int noSecected = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+	return new int[]{isSelected, noSelected};
+}
