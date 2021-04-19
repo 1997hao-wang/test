@@ -1,0 +1,17 @@
+public int longest(int[] arr) {
+	HashSet<Integer> set = new HashSet<>();
+	for(int a:arr)	set.add(a);	//去重
+	int res = 1;
+	for(int s:set) {
+		if(!set.contains(s-1)) {
+			int cur = s;
+			int max = 1;
+			while(set.contains(cur+1)) {
+				cur ++;
+				max ++;
+			}
+			res = Math.max(max, res);
+		}
+	}
+	return res;
+}
