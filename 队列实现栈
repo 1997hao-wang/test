@@ -1,0 +1,36 @@
+public class Queue2Stack {
+
+    private Queue<Integer> q1;
+    private Queue<Integer> q2;
+
+    public Queue2Stack() {
+        q1 = new LinkedList<>();
+        q2 = new LinkedList<>();
+    }
+
+    public void push(int a) {
+        //新添加的放在q2中
+        q2.offer(a);
+        //取出q1所有放在q2中
+        while(!q1.isEmpty()) {
+            q2.offer(q1.poll());
+        }
+        //q2与q1交换
+        Queue<Integer> temp = q2;
+        q2 = q1;
+        q1 = temp;
+    }
+
+    public int pop() {
+        return q1.poll();
+    }
+
+    public int top() {
+        return q1.peek();
+    }
+
+    public boolean isEmpty() {
+        return q1.isEmpty();
+    }
+
+}
