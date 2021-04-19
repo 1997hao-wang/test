@@ -1,0 +1,29 @@
+//凑成总金额的最少兑换次数
+public int change1(int[] coins, int amount) {
+    int[] dp = new int[amount+1];
+    int max = amount+1;
+    Arrays.fill(dp, max);
+    dp[0] = 0;
+    for (int i = 1; i <= amount; i++) {
+        for (int j = 0; j < coins.length; j++) {
+            //面额比当前硬币大
+            if(i >= coins[j]) {
+                dp[i] = Math.min(dp[i], dp[i-coins[j]]+1);
+            }
+        }
+    }
+    return dp[amount] > amount ? -1 : dp[amount];
+}
+
+//凑成总金额的兑换组合数
+public int change2(int[] coins, int amount) {
+    int[] dp = new int[amount+1];
+    dp[0] = 1;
+    for(int coin:coins) {
+        //从硬币角度，最少为当前硬币
+        for (int i = coin; i < amount+1; i++) {
+            dp[i] += dp[i-coin];
+        }
+    }
+    return dp[amount];
+}
